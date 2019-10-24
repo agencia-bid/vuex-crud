@@ -1,7 +1,7 @@
 <template>
   <article :class="`article-${article.id}`">
     <router-link :to="{ name: 'article', params: { id: article.id } }">
-      <h1>{{ article.title }}</h1>
+      <h1>{{ article.title }} ID: {{ article.id }}</h1>
     </router-link>
 
     <p>

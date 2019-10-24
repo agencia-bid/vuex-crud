@@ -65,9 +65,9 @@ const createMutations = ({
 
       fetchSingleSuccess(state, response) {
         const { data } = response;
-        const id = data[idAttribute].toString();
 
-        Vue.set(state.entities, id, data);
+        state.entity = data;
+
         state.isFetchingSingle = false;
         state.fetchSingleError = null;
         onFetchSingleSuccess(state, response);

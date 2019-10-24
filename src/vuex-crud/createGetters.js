@@ -17,6 +17,13 @@ const createGetters = ({ getters } = {}) => Object.assign({}, {
   },
 
   /**
+   * Get resource
+   */
+  entity(state) {
+    return state.entity;
+  },
+
+  /**
    * Return true if there is a logged error.
    */
   isError(state) {

@@ -3,9 +3,14 @@
     <button class="fetch-articles" @click="onFetchArticles">Fetch Articles</button>
     <button class="create-article" @click="onCreateArticle">Create New Article</button>
 
-    <div id="articles" v-if="articles.length">
+    <div style="display: block; margin-top: 1rem;">
+      <input type="text" v-model="byId">
+      <button class="fetch-single-article" @click="onFetchSingleArticle">Fetch Article By ID</button>
+    </div>
+
+    <div id="articles">
       <blog-article
-        v-for="article in articles"
+        v-for="article in articlesComputed"
         :article="article"
         :key="article.id" />
     </div>
@@ -22,19 +27,34 @@
   const ipsum = new Ipsum();
 
   export default {
+    data: () => ({
+      byId: null
+    }),
     components: {
       'blog-article': ArticleDetail
     },
 
     computed: {
       ...mapGetters('articles', {
-        articles: 'list'
-      })
+        articles: 'list',
+        article: 'entity'
+      }),
+      articlesComputed() {
+        if (Object.keys(this.article).length > 0) {
+          return [this.article];
+        }
+
+        return this.articles;
+      }
     },
 
     methods: {
       onFetchArticles() {
         this.fetchArticles();
+      },
+
+      onFetchSingleArticle() {
+        this.fetchSingleArticle({ id: this.byId });
       },
 
       onCreateArticle() {
@@ -48,6 +68,7 @@
 
       ...mapActions('articles', {
         fetchArticles: 'fetchList',
+        fetchSingleArticle: 'fetchSingle',
         createArticle: 'create'
       })
     }
